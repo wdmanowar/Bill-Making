@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1e3a8a">
+<title>বিল প্রস্তুতকরণ</title>
+<style>
+:root{--bg:#eef2f7;--tx:#1e293b;--mu:#64748b;--bd:#dbe2ec;--ac:#2563eb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
+header{background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff;text-align:center;padding:22px 16px 18px}
+header h1{margin:0;font-size:26px;letter-spacing:.5px}
+header p{margin:4px 0 0;font-size:13px;opacity:.75}
+#st{display:inline-block;margin-top:8px;font-size:12px;padding:2px 12px;border-radius:99px;background:rgba(255,255,255,.15)}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;padding:16px;background:#fff;border-bottom:1px solid var(--bd);box-shadow:0 2px 6px rgba(0,0,0,.05)}
+nav button{font:inherit;font-weight:600;font-size:14px;min-width:130px;padding:10px 20px;border-radius:8px;cursor:pointer;color:var(--c);background:#fff;border:2px solid var(--c);transition:.15s}
+nav button:hover{background:var(--c);color:#fff;transform:translateY(-1px)}
+nav button.on{background:var(--c);color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.2)}
+main{max-width:1150px;margin:20px auto;padding:0 16px}
+.card{background:#fff;border:1px solid var(--bd);border-top:4px solid var(--ac);border-radius:10px;padding:18px;box-shadow:0 2px 8px rgba(15,23,42,.06)}
+h2{margin:0 0 14px;font-size:18px;color:var(--ac);text-align:center}
+.bar{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;justify-content:center;margin-bottom:16px}
+label{display:flex;flex-direction:column;font-size:12px;font-weight:600;color:var(--mu);gap:4px}
+input,select{font:inherit;padding:8px 10px;border:1px solid var(--bd);border-radius:6px;min-width:140px;background:#fff;color:var(--tx)}
+input[readonly]{background:#f1f5f9}
+.btn{font:inherit;font-weight:600;background:var(--ac);color:#fff;border:0;border-radius:6px;padding:9px 20px;cursor:pointer}
+.btn.s{padding:3px 10px;font-size:12px;background:#fff;color:var(--ac);border:1px solid var(--ac)}
+.btn.d{color:#dc2626;border-color:#dc2626}
+.w{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:14px}
+th,td{border:1px solid var(--bd);padding:8px 10px;text-align:left}
+th{background:var(--ac);color:#fff;white-space:nowrap}
+tbody tr:nth-child(even){background:#f8fafc}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tfoot td{font-weight:700;background:#e8eef7}
+.neg{color:#dc2626}
+.em{text-align:center;color:var(--mu);padding:24px}
+.note{font-size:12px;color:var(--mu);margin-top:10px;text-align:center}
+#mo{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:50;align-items:center;justify-content:center;padding:16px;--ac:#dc2626}
+#mo.on{display:flex}
+#mo .card{max-width:340px;width:100%;text-align:center}
+#mo .bar{margin:16px 0 0}
+
+
+#rpt{display:none}
+
+textarea{font:inherit;padding:8px 10px;border:1px solid var(--bd);border-radius:6px;background:#fff;color:var(--tx);width:100%;min-height:96px;resize:vertical}
+.bg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.bg .full{grid-column:1/-1}
+.bg input{width:100%}
+
+.sub{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 0 14px}
+.sub button{font:inherit;font-weight:600;font-size:14px;padding:9px 20px;border-radius:99px;cursor:pointer;background:#fff;color:var(--ac);border:2px solid var(--ac)}
+.sub button.on{background:var(--ac);color:#fff}
+table.ns{min-width:0}
+.ns input{width:100%;min-width:64px;padding:5px 7px;font-size:13px}
+.ns td{padding:4px 6px}
+.ns th small{font-weight:400;opacity:.85}
+.ns.wide{min-width:max-content}
+.ns.wide td input{width:96px;min-width:0}
+.ns.wide td.sk input{width:190px}
+.ns .sk{position:sticky;left:0;z-index:1;background:#fff}
+.ns th.sk{background:var(--ac)}
+.ns tfoot .sk{background:#e8eef7}
+.ns.wide td.n{white-space:nowrap}
+/* ---- Mobile ---- */
+.mbtn{display:none}
+@media(max-width:640px){
+body{-webkit-text-size-adjust:100%}
+header{padding:14px 12px 12px}
+header h1{font-size:20px}
+header p{font-size:12px}
+nav{position:sticky;top:0;z-index:20;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:8px;padding:10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;min-width:0;white-space:nowrap;padding:9px 14px;font-size:13px}
+nav button:hover{transform:none}
+main{margin:12px auto;padding:0 10px}
+.card{padding:14px}
+h2{font-size:16px}
+.bar{flex-direction:column;align-items:stretch;gap:10px}
+.bar label{width:100%;font-size:13px}
+input,select{width:100%;min-width:0;font-size:16px;padding:11px 12px}
+.btn{width:100%;padding:13px 16px;font-size:16px}
+#mo .bar{flex-direction:row}
+#mo .btn{flex:1;width:auto}
+.mbtn{display:block;margin-top:14px}
+.w{overflow:visible}
+.stk{min-width:0;font-size:14px}
+.stk,.stk tbody,.stk tfoot,.stk tr,.stk td{display:block;width:100%}
+.stk thead{display:none}
+.stk tbody tr,.stk tfoot tr{border:1px solid var(--bd);border-radius:10px;margin:0 0 12px;overflow:hidden;background:#fff!important}
+.stk tfoot tr{background:#e8eef7!important}
+.stk td{border:0;border-bottom:1px solid #eef2f7;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:right!important;padding:9px 12px}
+.stk td:last-child{border-bottom:0}
+.stk td[data-l]::before{content:attr(data-l);font-weight:600;color:var(--mu);text-align:left;flex:0 0 40%}
+.stk td.cs{display:block;text-align:center!important;font-weight:700}
+.stk td.em{padding:20px}
+.stk .btn.s{width:auto;padding:8px 16px;font-size:14px}
+.stk input.ai{width:150px!important;text-align:right}
+.stk td:has(.btn.s){justify-content:flex-end}
+.stk td:has(.btn.s)::before{margin-right:auto}
+.w.sc{overflow-x:auto}
+.ns input{font-size:16px}
+.sub button{flex:1 1 auto;padding:9px 12px;font-size:13px}
+.bar .btn{width:100%}
+}
+@media print{#lock,header,nav,.bar,#mo,#ri,.mbtn{display:none}}
+@media print{
+@page{size:A4 portrait;margin:12mm}
+body.rp{background:#fff}
+body.rp header,body.rp nav,body.rp main,body.rp #lock,body.rp #mo,body.rp #ri{display:none!important}
+body.rp #rpt{display:block;color:#000;font-family:Calibri,Arial,sans-serif;font-size:12px}
+#rpt .t{text-align:center;line-height:1.55;font-size:13px}
+#rpt h3{text-align:center;font-size:16px;margin:10px 0 10px;padding:6px 0;border-top:1px solid #000;border-bottom:1px solid #000}
+#rpt .ib{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+#rpt .ib table{border:0;min-width:0;width:auto;font-size:12px}
+#rpt .ib td{border:0;padding:1px 6px 1px 0;background:none}
+#rpt .ib .r{width:55%}
+#rpt table.rt{width:100%;min-width:0;border-collapse:collapse;font-size:12px}
+#rpt table.rt th,#rpt table.rt td{border:1px solid #000;padding:3px 5px;background:none;color:#000;text-align:left}
+#rpt table.rt th{text-align:center;font-weight:700;white-space:normal}
+#rpt table.rt td.n{text-align:right;white-space:nowrap}
+#rpt table.rt td.nm{width:34%}
+#rpt table.rt td.c{text-align:center}
+#rpt table.rt tr.g td{font-weight:700}
+#rpt table.rt tr{page-break-inside:avoid}
+#rpt .bf{font-family:"SolaimanLipi","Solaiman Lipi","Nirmala UI","Kalpurush","Vrinda","Noto Sans Bengali",Arial,sans-serif;font-size:11.5px;line-height:1.5;color:#000}
+#rpt .bf .pg{page-break-after:always;break-after:page}
+#rpt .bf .pg2{page-break-inside:avoid}
+#rpt .bf table{min-width:0;width:100%;border-collapse:collapse;font-size:inherit}
+#rpt .bf th,#rpt .bf td{border:0;padding:0;background:none;color:#000;text-align:left;white-space:normal;font-weight:400}
+#rpt .bf tbody tr:nth-child(even){background:none}
+#rpt .bf table.bt{border:1px solid #000}
+#rpt .bf table.bt th,#rpt .bf table.bt td{border:1px solid #000;padding:3px 7px}
+#rpt .bf table.bt th{text-align:center;font-weight:400}
+#rpt .bf table.bt td.n{text-align:right;white-space:nowrap}
+#rpt .bf table.bt td.c{text-align:center}
+#rpt .bf table.bt td.r{text-align:right}
+#rpt .bf table.bt tr.main td{height:62mm;vertical-align:top}
+#rpt .bf table.bt td.ds{white-space:pre-wrap}
+#rpt .bf table.hs th{text-align:left;padding:4px 7px}
+#rpt .bf .hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+#rpt .bf .hd .fl{width:26%;font-size:11.5px}
+#rpt .bf .hd .tt{flex:1;text-align:center;font-size:17px}
+#rpt .bf .hd .tt .of{font-size:11.5px;margin-top:6px}
+#rpt .bf .row{display:flex;justify-content:space-between;align-items:center;margin:9px 0;gap:8px}
+#rpt .bf .bx span{display:inline-block;width:19px;height:21px;border:1px solid #000;margin-left:-1px;text-align:center;line-height:21px;vertical-align:middle}
+#rpt .bf .bx{margin-left:6px;margin-right:auto}
+#rpt .bf .dl{display:inline-block;border-bottom:1px dotted #000;padding:0 4px;text-align:center}
+#rpt .bf .cb{display:inline-block;width:11px;height:11px;border:1px solid #000;vertical-align:middle;margin-right:16px}
+#rpt .bf .cb.on{background:#000;box-shadow:inset 0 0 0 2px #fff}
+#rpt .bf .nt p{margin:6px 0 0;text-align:justify}
+#rpt .bf .rt2{text-align:right;font-size:10px;margin-top:6px}
+#rpt .bf .fn{font-size:9.5px;border-top:1px solid #000;margin-top:8px;padding-top:3px;width:60%}
+#rpt .bf .pg2 p{margin:5px 0}
+#rpt .bf .pg2 p.in{margin-left:22px}
+#rpt .bf .pn{text-align:center}
+#rpt .bf .sg2{display:flex;gap:30px;margin:12px 0}
+#rpt .bf .sg2>*{flex:1}
+#rpt .bf .sg2.tb{gap:36px;margin-top:16px}
+#rpt .bf .sgc>div{margin:4px 0}
+#rpt .bf .gp{margin-top:12px}
+#rpt .bf .ln{border:0;border-top:1px solid #000;margin:14px 0 6px}
+#rpt .bf .ac{text-align:center;font-size:13px;margin-bottom:6px}
+#rpt .bf .sg3{display:flex;gap:18px;margin-top:6px}
+#rpt .bf .sg3>div{flex:1}
+#rpt .bf .sg3>div>div{margin:3px 0}
+#rpt .bf{font-size:12px;line-height:1.65}
+#rpt .bf table.bt th,#rpt .bf table.bt td{padding:5px 8px}
+#rpt .bf table.bt tr.main td{height:64mm}
+#rpt .bf .hd{margin-bottom:10px}
+#rpt .bf .hd .fl,#rpt .bf .hd .tt .of{font-size:12px}
+#rpt .bf .hd .tt{font-size:18px}
+#rpt .bf .row{margin:13px 0}
+#rpt .bf .nt p{margin:8px 0 0;line-height:1.7}
+#rpt .bf .fn{font-size:10px;margin-top:10px;width:70%}
+#rpt .bf .pg2{font-size:11.5px;line-height:1.5}
+#rpt .bf .pg2 p{margin:4px 0}
+#rpt .bf .pg2 p.in{margin-left:24px}
+#rpt .bf .sg2{margin:9px 0}
+#rpt .bf .sg2.tb{margin-top:10px}
+#rpt .bf .sgc>div{margin:3px 0}
+#rpt .bf .gp{margin-top:6px}
+#rpt .bf table.hs th,#rpt .bf table.hs td{padding:4px 8px}
+#rpt .bf .ln{margin:9px 0 5px}
+#rpt .bf .ac{font-size:14px;margin-bottom:8px}
+#rpt .bf .sg3>div>div{margin:2px 0}
+#rpt .bf .lsr{width:186mm;height:273mm;position:relative;break-before:page;page-break-before:always}
+#rpt .bf .lsi{position:absolute;top:0;left:186mm;width:273mm;height:186mm;transform-origin:top left;transform:rotate(90deg)}
+#rpt .bf.sm{font-size:10.5px;line-height:1.35}
+#rpt .bf.sm table.bt th,#rpt .bf.sm table.bt td{padding:1.5px 5px;font-size:10.5px;line-height:1.3}
+#rpt .bf.sm .row{margin:5px 0}
+#rpt .bf.sm .hd{margin-bottom:6px}
+#rpt .bf.sm .hd .tt{font-size:16px}
+#rpt .bf.sm .hd .tt .of{font-size:11px;margin-top:3px}
+#rpt .bf.sm .ac{font-size:13px}
+#rpt .bf.sm td.ins{vertical-align:top;font-size:9px;line-height:1.4;text-align:justify;padding:4px 6px}
+#rpt .bf.sm td.ins p{margin:0 0 7px}
+#rpt .bf.sm .pg2{font-size:11px;line-height:1.45}
+#rpt .bf.sm .pg2 p{margin:4px 0}
+#rpt .bf.sm .pg2 p.in{margin-left:24px}
+#rpt .bf.sm .fn{margin-top:6px;font-size:9.5px}
+#rpt .bf.sm table.bt.sc{table-layout:fixed}
+#rpt .bf.sm table.bt.sc th,#rpt .bf.sm table.bt.sc td{padding:1px 1.5px;font-size:7px;line-height:1.2;text-align:center;word-break:break-word}
+#rpt .bf.sm table.bt.sc td{height:var(--rh,7.5mm)}
+#rpt .bf.sm table.bt.sc td.n{text-align:right}
+#rpt .bf.sm table.bt.sc td.nmc{text-align:left;font-size:8px}
+#rpt .bf.sm table.bt.sc tr.g td{font-weight:700}
+#rpt .bf.sm table.bt.sc thead{display:table-header-group}
+#rpt .bf.sm table.bt.sc tr{page-break-inside:avoid}
+}
+
+
+/* ---- Bill Maker: header + tabs ---- */
+body{font-family:"Segoe UI","Noto Sans Bengali","Nirmala UI",Roboto,Arial,sans-serif}
+header{padding:20px 16px 16px}
+header .hw{display:flex;align-items:center;justify-content:center;gap:14px}
+header .logo{flex:0 0 auto;width:54px;height:54px;border-radius:14px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+header .ht{text-align:left}
+header h1{font-size:26px;line-height:1.25}
+header p{margin:2px 0 0;font-size:13px;opacity:.8}
+#st{margin-top:10px}
+nav{position:sticky;top:0;z-index:20}
+@media(max-width:640px){
+header{padding:14px 12px 12px}
+header .logo{width:42px;height:42px;border-radius:11px}
+header .logo svg{width:24px;height:24px}
+header h1{font-size:20px}
+header p{font-size:12px}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="hw">
+<div class="logo"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2.5h12a1 1 0 0 1 1 1V21l-2.5-1.6L14 21l-2-1.6L10 21l-2.5-1.6L5 21V3.5a1 1 0 0 1 1-1z"/><path d="M8.5 7.5h7M8.5 11h7M8.5 14.5h4"/></svg></div>
+<div class="ht"><h1>বিল প্রস্তুতকরণ</h1><p>ক্রয়, অফিসার ও কর্মচারী বিল তৈরি ও প্রিন্ট — টি. আর. ফরম ২১ · ১৩ · ১৫</p></div>
+</div>
+<span id="st">তথ্য এই ডিভাইসেই সংরক্ষিত হয়</span>
+</header>
+<nav id="nav"></nav>
+<main id="main"></main>
+<div id="rpt"></div>
+<div id="mo"><div class="card"><div id="mm" style="font-size:15px"></div><div class="bar"><button class="btn" id="my" style="background:#dc2626">মুছুন</button><button class="btn" id="mn" style="background:#64748b">বাতিল</button></div></div></div>
+<script>
+
+const DEF_OC="";
+const TABS=[["purchase","ক্রয় ও সরবরাহ সেবা বিল (টি. আর. ২১)","#0891b2"],["officer","অফিসার বিল (টি. আর. ১৩)","#7c3aed"],["employee","কর্মচারী বিল (টি. আর. ১৫)","#ea580c"]];
+let DB={bills:[]},tab="purchase";
+try{const t=localStorage.getItem("bill_tab");if(TABS.some(x=>x[0]===t))tab=t}catch(_){}
+const $=id=>document.getElementById(id);
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function today(){return iso(new Date())}
+function nd(v){if(!v)return"";v=String(v);if(/^\d{4}-\d{2}-\d{2}$/.test(v))return v;const d=new Date(v);return isNaN(d)?"":iso(d)}
+const fd=v=>{const p=String(v||"").split("-");return p.length===3?p[2]+"-"+p[1]+"-"+p[0]:""};
+const fmt=(n,f=2)=>Number(n).toLocaleString("en-US",{maximumFractionDigits:f});
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const empty=c=>`<tr><td class="em" colspan="${c}">কোনো তথ্য নেই</td></tr>`;
+function ask(msg){return new Promise(r=>{$("mm").textContent=msg;$("mo").classList.add("on");const f=v=>{$("mo").classList.remove("on");$("my").onclick=$("mn").onclick=null;r(v)};$("my").onclick=()=>f(true);$("mn").onclick=()=>f(false)})}
+
+/* ---- Print ---- */
+function doPrint(){const done=()=>document.body.classList.remove("rp");window.print();setTimeout(done,1500)}
+function rpGo(html){$("rpt").innerHTML=html;document.body.classList.add("rp");doPrint()}
+window.addEventListener("afterprint",()=>document.body.classList.remove("rp"));
+
+/* ---- Tabs ---- */
+function nav(){$("nav").innerHTML=TABS.map(([k,l,c])=>`<button style="--c:${c}" class="${k===tab?"on":""}" onclick="go('${k}')">${l}</button>`).join("")}
+function go(t){tab=t;try{localStorage.setItem("bill_tab",t)}catch(_){}nav();render();window.scrollTo(0,0)}
+function render(){const t=TABS.find(x=>x[0]===tab),m=$("main");m.style.setProperty("--ac",t[2]);
+ m.innerHTML=({purchase:billP,officer:billO,employee:billE})[tab]();if(tab==="purchase")bc();mob()}
+function mob(){document.querySelectorAll("#main table").forEach(t=>{
+const hs=[...t.querySelectorAll("thead th")].map(h=>h.textContent.replace(/\s+/g," ").trim());
+if(!t.classList.contains("ns"))t.classList.add("stk");
+t.querySelectorAll("tbody tr,tfoot tr").forEach(r=>{let i=0;[...r.children].forEach(c=>{const n=c.colSpan||1;if(n>1||!hs[i])c.classList.add("cs");else c.setAttribute("data-l",hs[i]);i+=n})})})}
+
+/* ---- Purchase bill (T.R. Form 21): data is kept in this browser only ---- */
+const BILL={id:"",off:"",oc:"",vn:"",dt:today(),code:"",desc:"",amt:"",tax:"",vat:"",alloc:"",prev:""};
+const BK="bills_v1";
+function gB(){return DB.bills}
+function cacheB(){try{localStorage.setItem(BK,JSON.stringify(DB.bills))}catch(_){alert("এই ব্রাউজারে বিল সংরক্ষণ করা যায়নি")}}
+const nb=b=>({id:String(b.id),fy:String(b.fy==null?"":b.fy),off:String(b.off==null?"":b.off),oc:String(b.oc==null?"":b.oc),vn:String(b.vn==null?"":b.vn),dt:nd(b.dt),code:String(b.code==null?"":b.code),desc:String(b.desc==null?"":b.desc),amt:String(b.amt==null?"":b.amt),tax:String(b.tax==null?"":b.tax),vat:String(b.vat==null?"":b.vat),alloc:String(b.alloc==null?"":b.alloc),prev:String(b.prev==null?"":b.prev)});
+try{DB.bills=(JSON.parse(localStorage.getItem(BK)||"[]")||[]).filter(b=>b&&String(b.id)!=="").map(nb)}catch(_){DB.bills=[]}
+
+const fyOf=d=>{const p=String(d||today()).split("-"),y=+p[0],mo=+p[1],s=mo>=7?y:y-1;return s+"-"+String((s+1)%100).padStart(2,"0")};
+const en=s=>String(s==null?"":s).replace(/[০-৯]/g,d=>"০১২৩৪৫৬৭৮৯".indexOf(d));
+const bP=v=>{const n=parseFloat(en(v));return isNaN(n)||n<0?0:Math.round(n*100)};
+const bn=s=>String(s).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+const ig=n=>{const s=String(n);if(s.length<=3)return s;return s.slice(0,-3).replace(/\B(?=(\d{2})+(?!\d))/g,",")+","+s.slice(-3)};
+const BW="শূন্য,এক,দুই,তিন,চার,পাঁচ,ছয়,সাত,আট,নয়,দশ,এগারো,বারো,তেরো,চৌদ্দ,পনেরো,ষোল,সতেরো,আঠারো,উনিশ,বিশ,একুশ,বাইশ,তেইশ,চব্বিশ,পঁচিশ,ছাব্বিশ,সাতাশ,আটাশ,ঊনত্রিশ,ত্রিশ,একত্রিশ,বত্রিশ,তেত্রিশ,চৌত্রিশ,পঁয়ত্রিশ,ছত্রিশ,সাঁইত্রিশ,আটত্রিশ,ঊনচল্লিশ,চল্লিশ,একচল্লিশ,বিয়াল্লিশ,তেতাল্লিশ,চুয়াল্লিশ,পঁয়তাল্লিশ,ছেচল্লিশ,সাতচল্লিশ,আটচল্লিশ,ঊনপঞ্চাশ,পঞ্চাশ,একান্ন,বাহান্ন,তিপ্পান্ন,চুয়ান্ন,পঞ্চান্ন,ছাপ্পান্ন,সাতান্ন,আটান্ন,ঊনষাট,ষাট,একষট্টি,বাষট্টি,তেষট্টি,চৌষট্টি,পঁয়ষট্টি,ছেষট্টি,সাতষট্টি,আটষট্টি,ঊনসত্তর,সত্তর,একাত্তর,বাহাত্তর,তিয়াত্তর,চুয়াত্তর,পঁচাত্তর,ছিয়াত্তর,সাতাত্তর,আটাত্তর,ঊনআশি,আশি,একাশি,বিরাশি,তিরাশি,চুরাশি,পঁচাশি,ছিয়াশি,সাতাশি,অষ্টাশি,ঊননব্বই,নব্বই,একানব্বই,বিরানব্বই,তিরানব্বই,চুরানব্বই,পঁচানব্বই,ছিয়ানব্বই,সাতানব্বই,আটানব্বই,নিরানব্বই".split(",");
+function bw(n){if(n===0)return BW[0];const p=[];
+const cr=Math.floor(n/1e7);n%=1e7;const lk=Math.floor(n/1e5);n%=1e5;const hz=Math.floor(n/1e3);n%=1e3;const sh=Math.floor(n/100),r=n%100;
+if(cr)p.push(bw(cr)+" কোটি");if(lk)p.push(BW[lk]+" লক্ষ");if(hz)p.push(BW[hz]+" হাজার");if(sh)p.push(BW[sh]+" শত");if(r)p.push(BW[r]);return p.join(" ")}
+function bwMoney(p){const t=Math.floor(p/100),q=p%100;let s="";if(t)s+=bw(t)+" টাকা";if(q)s+=(s?" ":"")+bw(q)+" পয়সা";return (s||"শূন্য টাকা")+" মাত্র"}
+
+
+
+function billP(){if(!BILL.oc)BILL.oc=DEF_OC;
+const f=(k,l,ex="")=>`<label>${l}<input id="b_${k}" value="${esc(BILL[k])}" ${ex} oninput="BILL.${k}=this.value;bc()"></label>`;
+return `<div class="card"><h2>ক্রয়, সরবরাহ ও সেবা বাবদ ব্যয়ের বিল (টি. আর. ফরম নং ২১)</h2><div class="bg">
+${f("off","দপ্তর")}${f("oc","অপারেশন কোড",'inputmode="numeric" maxlength="7"')}${f("vn","ভাউচার নং")}
+<label>তারিখ<input id="b_dt" type="date" value="${BILL.dt}" oninput="BILL.dt=this.value;bfy()"></label>
+<label>অর্থবছর (তারিখ অনুযায়ী)<input id="b_fy" readonly value="${fyOf(BILL.dt)}"></label>
+${f("code","অর্থনৈতিক কোড")}
+${f("alloc","বরাদ্দের পরিমাণ (টাকা, ঐচ্ছিক)",'type="number" min="0" step="any"')}
+${f("prev","গত বিলের মোট জের (টাকা, ঐচ্ছিক)",'type="number" min="0" step="any" placeholder="ফাঁকা রাখলে সংরক্ষিত আগের বিল থেকে হিসাব হবে"')}
+<label class="full">বিলের বিবরণ<textarea id="b_desc" oninput="BILL.desc=this.value">${esc(BILL.desc)}</textarea></label>
+${f("amt","বিলের পরিমাণ (টাকা)",'type="number" min="0" step="any"')}${f("tax","আয়কর (টাকা)",'type="number" min="0" step="any"')}${f("vat","ভ্যাট/মূসক (টাকা)",'type="number" min="0" step="any"')}
+<label>প্রদেয় অঙ্ক (টাকা)<input id="b_net" readonly></label></div>
+<div class="bar" style="margin:18px 0 0"><button class="btn" onclick="printBill()">প্রিন্ট বিল</button><button class="btn" style="background:#64748b" onclick="clearBill()">মুছুন</button></div>
+<p class="note">তথ্য পূরণ করে “প্রিন্ট বিল” চাপলে টি. আর. ফরম নং ২১ তৈরি হবে। বিল স্বয়ংক্রিয়ভাবে এই ডিভাইসে সংরক্ষিত হয়; “গত বিলের মোট জের” ঘরে নিজে লিখলে সেটাই বসবে; ফাঁকা রাখলে একই অর্থবছরে একই অর্থনৈতিক কোডের সংরক্ষিত আগের বিলগুলোর যোগফল বসবে।</p></div>${savedList()}`}
+function savedList(){const sb=gB();
+const rows=sb.map((b,i)=>`<tr><td>${i+1}</td><td>${fd(b.dt)}</td><td>${esc(b.vn)}</td><td>${esc(b.code)}</td><td class="n">${fmt(bP(b.amt)/100)}</td><td class="n">${fmt(bP(b.tax)/100)}</td><td class="n">${fmt(bP(b.vat)/100)}</td><td><button class="btn s" onclick="pBill('${b.id}')">প্রিন্ট</button> <button class="btn s" onclick="eBill('${b.id}')">সম্পাদনা</button> <button class="btn s d" onclick="dBill('${b.id}')">মুছুন</button></td></tr>`).join("");
+return `<div class="card" style="margin-top:18px"><h2>সংরক্ষিত বিল</h2><div class="w"><table><thead><tr><th>ক্রমিক</th><th>তারিখ</th><th>ভাউচার নং</th><th>অর্থনৈতিক কোড</th><th class="n">বিলের পরিমাণ</th><th class="n">আয়কর</th><th class="n">ভ্যাট</th><th>কার্যক্রম</th></tr></thead><tbody>${rows||empty(8)}</tbody></table></div><div class="note">বিলগুলো শুধু এই ব্রাউজারে সংরক্ষিত থাকে। ব্রাউজারের ডেটা মুছলে বা অন্য ডিভাইসে খুললে এগুলো দেখা যাবে না।</div></div>`}
+function eBill(id){const b=gB().find(x=>x.id===id);if(!b)return;Object.assign(BILL,b);render();window.scrollTo(0,0)}
+function pBill(id){const b=gB().find(x=>x.id===id);if(b)buildBill(b)}
+async function dBill(id){if(!await ask("এই সংরক্ষিত বিলটি মুছে ফেলবেন?"))return;
+const k=DB.bills.findIndex(x=>x.id===id);if(k<0)return;DB.bills.splice(k,1);cacheB();if(BILL.id===id)BILL.id="";render()}
+function bfy(){const y=$("b_fy");if(y)y.value=fyOf(BILL.dt)}
+function bc(){const n=$("b_net");if(n)n.value=fmt((bP(BILL.amt)-bP(BILL.tax)-bP(BILL.vat))/100)}
+function clearBill(){BILL.id=BILL.vn=BILL.code=BILL.desc=BILL.amt=BILL.tax=BILL.vat=BILL.alloc=BILL.prev="";BILL.dt=today();render()}
+function printBill(){
+const a=bP(BILL.amt),t=bP(BILL.tax),v=bP(BILL.vat);
+if(!a)return alert("বিলের পরিমাণ লিখুন");
+if(!String(BILL.code).trim())return alert("অর্থনৈতিক কোড লিখুন");
+if(t+v>a)return alert("আয়কর ও ভ্যাটের যোগফল বিলের পরিমাণের চেয়ে বেশি হতে পারে না");
+const rec={id:BILL.id||uid(),fy:fyOf(BILL.dt),off:BILL.off,oc:BILL.oc,vn:BILL.vn,dt:BILL.dt,code:en(BILL.code).trim(),desc:BILL.desc,amt:BILL.amt,tax:BILL.tax,vat:BILL.vat,alloc:BILL.alloc,prev:BILL.prev};
+const k=DB.bills.findIndex(x=>x.id===rec.id);if(k>=0)DB.bills[k]=rec;else DB.bills.push(rec);cacheB();
+BILL.id=rec.id;BILL.code=rec.code;render();buildBill(rec)}
+
+function buildBill(b){
+const a=bP(b.amt),t=bP(b.tax),v=bP(b.vat);
+const oc=en(b.oc).replace(/\D/g,"").slice(0,7);
+const all=gB(),own=all.findIndex(x=>x.id===b.id),before=own>=0?all.slice(0,own):all;
+const prevAuto=before.filter(x=>x.fy===b.fy&&x.code===b.code).reduce((s,x)=>s+bP(x.amt),0),prev=String(b.prev==null?"":b.prev).trim()!==""?bP(b.prev):prevAuto;
+const alloc=bP(b.alloc);
+const m=p=>({t:bn(ig(Math.floor(p/100))),p:bn(String(p%100).padStart(2,"0"))});
+const dots=n=>"."+"".padEnd(n,".");
+const dl=(x,w)=>x?`<span class="dl" style="min-width:${w}px">${esc(x)}</span>`:`<span>${dots(Math.round(w/5))}</span>`;
+const boxes=Array.from({length:7},(_,i)=>`<span>${oc[i]?bn(oc[i]):""}</span>`).join("");
+const dr=(code,name,p)=>`<tr><td><i class="cb${p?" on":""}"></i><b>${bn(code)}</b></td><td>${name}</td><td class="n">${p?m(p).t:""}</td><td class="n">${p?m(p).p:""}</td></tr>`;
+const z=p=>p?`<td class="n">${m(p).t}</td><td class="n">${m(p).p}</td>`:"<td></td><td></td>";
+const ded=t+v,net=a-ded,A=m(a),D=m(ded),N=m(net);
+const p1=`<div class="pg">
+<div class="hd"><div class="fl">টি. আর. ফরম নং ২১<br>(এস, আর ১৮৩ দ্রষ্টব্য)</div><div class="tt">ক্রয়, সরবরাহ ও সেবা বাবদ ব্যয়ের বিল<div class="of">দপ্তর ${dl(b.off,260)}</div></div><div class="fl"></div></div>
+<div class="row"><span>প্রাতিষ্ঠানিক/ অপারেশন কোড *</span><span class="bx">${boxes}</span><span>টোকেন নং ${dots(22)} তারিখ ${dots(24)}</span></div>
+<div class="row"><span>ভাউচার নং ${dl(bn(b.vn),110)}</span><span>তারিখ ${dl(b.dt?bn(fd(b.dt)):"",90)}</span><span>টিআইএন নং ${dots(22)}</span><span>বিআইএন নং ${dots(18)}</span></div>
+<table class="bt"><thead><tr><th style="width:17%">অর্থনৈতিক কোড</th><th>বিবরণ</th><th style="width:19%">টাকার পরিমাণ</th><th style="width:9%">পয়সা</th></tr></thead><tbody>
+<tr class="main"><td class="c">${bn(esc(b.code))}</td><td class="ds">${esc(b.desc)}</td><td class="n">${A.t}</td><td class="n">${A.p}</td></tr>
+<tr><td colspan="2" class="r"><b>মোট টাকা (ক)</b></td><td class="n">${A.t}</td><td class="n">${A.p}</td></tr>
+<tr><td colspan="4"><b>কর্তন ও পরিশোধ</b></td></tr>
+${dr("1111101","ব্যক্তি কর্তৃক দেয় আয়কর",t)}${dr("1141101","দেশজ পণ্য ও সেবার ওপর মূসক",v)}${dr("8113301","ঠিকাদারের নিরাপত্তা জমা",0)}
+<tr><td><i class="cb"></i></td><td></td><td></td><td></td></tr><tr><td><i class="cb"></i></td><td></td><td></td><td></td></tr>
+<tr><td colspan="2" class="r"><b>কর্তন ও পরিশোধ বাবদ মোট আদায় (খ)</b></td><td class="n">${ded?D.t:""}</td><td class="n">${ded?D.p:""}</td></tr>
+<tr><td><i class="cb"></i><b>৮১৭২১০৮</b></td><td>প্রদেয় বিল (ক-খ)</td><td class="n">${N.t}</td><td class="n">${N.p}</td></tr>
+<tr><td colspan="4">টাকা (কথায়): <b>${bwMoney(net)}</b></td></tr></tbody></table>
+<div class="nt"><p>১।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, জনস্বার্থে এই ব্যয় অপরিহার্য ছিল। আমি আরও প্রত্যয়ন করছি যে, আমার জানা ও বিশ্বাস মতে, এই বিলে উল্লেখিত প্রদত্ত অর্থ নিম্নবর্ণিত ক্ষেত্র ব্যতীত প্রকৃত প্রাপককে প্রদান করা হয়েছে, তবে স্থায়ী অগ্রিমের টাকা অপেক্ষা দায় বেশি হওয়ায়, অবশিষ্ট পাওনা এই বিলে দাবিকৃত টাকা প্রাপ্তির পর প্রদান করা হবে। আমি যথাসম্ভব সকল ভাউচার গ্রহণ করেছি এবং সেগুলো এমনভাবে বাতিল করা হয়েছে যেন পুনরায় ব্যবহার করা না যায়। ২৫ টাকার সকল উর্ধ্বের ভাউচারসমূহ এমনভাবে সংরক্ষণ করা হয়েছে, যেন প্রয়োজনমত ৩ বৎসরের মধ্যে এগুলো পেশ করা যায়। সকল পূর্ত কর্মের বিল এর সঙ্গে সংযুক্ত করা হলো।</p>
+<p>২।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, যে সকল দ্রব্যের জন্য স্টোর অ্যাকাউন্টস সংরক্ষণ করা হয় সে সব দ্রব্যাদি স্টক রেজিস্টারে অন্তর্ভুক্ত করা হয়েছে।</p>
+<p>৩।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, যে সব দ্রব্যাদি ক্রয়ের বিল পেশ করা হয়েছে, সে সব দ্রব্যের পরিমাণ সঠিক গুণগতমান ভাল, যে দরে ক্রয় করা হয়েছে, তা বাজারের দরের অধিক নয়, এবং কার্যাদেশ বা চালান (ইনভয়েস)-এর যথাস্থানে লিপিবদ্ধ করা হয়েছে, যাতে একই দ্রব্যের জন্য দ্বিতীয়বার (ডুপ্লিকেট) অর্থ প্রদান এড়ানো যায়।</p></div>
+<div class="rt2">[অপর পৃষ্ঠা দ্রষ্টব্য]</div>
+<div class="fn">* প্রতিষ্ঠানের ক্ষেত্রে ০৬ ডিজিট এবং বিশেষ কার্যক্রম/ প্রজেক্ট/ স্কিম -এর ক্ষেত্রে সাত (০৭) ডিজিটের কোড ব্যবহার করতে হবে।<br><i>বি: দ্র:-</i> ক্রয়, সরবরাহ ও সেবা ব্যয়ের বিল দাখিলের ক্ষেত্রে একটি নির্দিষ্ট অর্থনৈতিক কোডে অর্থ দাবি করতে হবে।</div></div>`;
+const sg=(l1,l2)=>`<div class="sgc"><div>${l1}</div><div>নাম ${dots(32)}</div><div>পদবি ${dots(32)}</div><div class="gp">সিল</div><div>স্থান ${dots(32)}</div><div>তারিখ ${dots(30)}</div></div>`;
+const bx=(rows)=>`<table class="bt hs"><tbody>${rows}</tbody></table>`;
+const p2=`<div class="pg2"><div class="pn">২</div>
+<p>৪।&nbsp; প্রত্যয়ন করা যাচ্ছে যে-</p>
+<p class="in">(ক)&nbsp; এই বিলে দাবিকৃত প্রকৃত পরিবহণ ভাড়া দেওয়া হয়েছে এবং এটি অপরিহার্য ছিল এবং ভাড়ার হার প্রচলিত যানবাহন ভাড়ার হারের মধ্যেই; এবং</p>
+<p class="in">(খ)&nbsp; সংশ্লিষ্ট সরকারি কর্মচারী সাধারণ বিধিবলে এই ভ্রমণের জন্য ব্যয় প্রাপ্য হন না, এবং এর অতিরিক্ত কোন বিশেষ পারিশ্রমিক, এই দায়িত্ব পালনের জন্য প্রাপ্য হবেন না।</p>
+<p>৫।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, যে সকল অধস্তন কর্মচারীর বেতন এই বিলে দাবী করা হয়েছে তারা ঐ সময়ে প্রকৃতই সরকারি কাজে নিয়োজিত ছিলেন (এস, আর, ১৭১)।</p>
+<p>৬।&nbsp; প্রত্যয়ন করা যাচ্ছে যে-</p>
+<p class="in">(ক)&nbsp; মনিহারি দ্রব্য বা স্ট্যাম্প বাবদ ২০ টাকার অধিক কোন ক্রয় স্থানীয়ভাবে হয়নি।</p>
+<p class="in">(খ)&nbsp; ব্যক্তিগত কাজে ব্যবহৃত তাঁবু বহনের কোন ব্যয় এই বিলে অন্তর্ভুক্ত হয়নি।</p>
+<p class="in">(গ)&nbsp; আবাসিক ভবনে ব্যবহৃত কোন বিদ্যুৎ বাবদ ব্যয় এই বিলে অন্তর্ভুক্ত হয়নি।</p>
+<p class="in">(ঘ)&nbsp; এই বৎসরে প্রসেস প্রদত্ত পারিতোষিক টাকা ${dots(30)} (যা গত ৩ বৎসরের জরিমানা বাবদ প্রাপ্তি গড় টাকার সামান্য অধিক হবে না)।</p>
+<p>৭।&nbsp; যার নামে চেক ইস্যু করা হবে (প্রযোজ্য ক্ষেত্রে) ${dots(60)}</p>
+<div class="sg2">${sg("* নিয়ন্ত্রণকারী/প্রতিস্বাক্ষরকারী কর্মকর্তার স্বাক্ষর "+dots(30))}${sg("বুঝে পেয়েছি "+dots(30)+"<br>আয়ন কর্মকর্তার স্বাক্ষর "+dots(24))}</div>
+<div class="sg2 tb">${bx(`<tr><th>বরাদ্দের হিসাব</th><th style="width:20%">টাকা</th><th style="width:16%">পয়সা</th></tr><tr><td>১। শেষ বিলের টাকার অঙ্ক</td>${z(alloc)}</tr><tr><td>২। এ যাবত অতিরিক্ত বরাদ্দ<br>(পত্র নং ${dots(28)})</td><td></td><td></td></tr><tr><td>৩। এ যাবত যে অঙ্কের বরাদ্দ কমানো হয়েছে।<br>(পত্র নং ${dots(28)})</td><td></td><td></td></tr><tr><td>৪। নিট মোট</td>${z(alloc)}</tr>`)}${bx(`<tr><th>ব্যয়ের হিসাব</th><th style="width:20%">টাকা</th><th style="width:16%">পয়সা</th></tr><tr><td>গত বিলের মোট জের (+)</td>${z(prev)}</tr><tr><td>এই বিলের মোট (+)</td>${z(a)}</tr><tr><td>সংযুক্ত-পূর্তকর্মের বিলের টাকা</td><td></td><td></td></tr><tr><td>মোট (পরবর্তী বিলে জের টেনে নেওয়া হবে।)</td>${z(prev+a)}</tr>`)}</div>
+<hr class="ln"><div class="ac">হিসাবরক্ষণ অফিসে ব্যবহারের জন্য</div>
+<p>প্রদানের জন্য পাস করা হল, টাকা ${dots(40)} কথায় ${dots(60)}</p>
+<div class="sg3"><div><div class="gp">অডিটর (স্বাক্ষর)</div><div>নাম ${dots(22)}</div><div>তাং${dots(22)}</div><div>সিল</div></div>
+<div><div class="gp">সুপার (স্বাক্ষর)</div><div>নাম ${dots(22)}</div><div>তাং${dots(22)}</div><div>সিল</div><div class="gp">চেক নং ${dots(30)}</div></div>
+<div><div class="gp">নিরীক্ষা ও হিসাবরক্ষণ অফিসার (স্বাক্ষর)</div><div>নাম ${dots(22)}</div><div>তাং ${dots(22)}</div><div>সিল ${dots(22)}</div><div class="gp">তারিখ${dots(20)}</div><div class="gp">চেক প্রদানকারীর স্বাক্ষর</div><div>নাম ${dots(36)}</div><div>তাং ${dots(28)}</div><div>সিল</div></div></div>
+<div class="fn">* কেবলমাত্র প্রযোজ্য ক্ষেত্রে<br><i>বি: দ্র:-</i> এটি স্পষ্টভাবে স্মরণ রাখতে হবে যে, বরাদ্দের অতিরিক্ত ব্যয়ের জন্য আয়ন কর্মকর্তা ব্যক্তিগতভাবে দায়ী থাকবেন। বরাদ্দের অতিরিক্ত ব্যয়ের বিপরীতে যদি তিনি অতিরিক্ত বরাদ্দ মঞ্জুর করতে না পারেন, তবে অতিরিক্ত ব্যয়িত অর্থ তাঁর ব্যক্তিগত ভাতাদি হতে আদায় করা হবে।</div></div>`;
+rpGo(`<div class="bf">${p1}${p2}</div>`)}
+
+
+
+const BMON=["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"];
+const bmOpt=v=>BMON.map((m,i)=>`<option value="${i}"${i===+v?" selected":""}>${m}</option>`).join("");
+const xld=(k,d)=>d;
+const xsv=()=>{};
+const xdef=()=>{};
+const xmm=p=>({t:bn(ig(Math.floor(p/100))),p:bn(String(p%100).padStart(2,"0"))});
+const xz2=p=>p?`<td class="n">${xmm(p).t}</td><td class="n">${xmm(p).p}</td>`:"<td></td><td></td>";
+const xfa=p=>p?bn(ig(Math.floor(p/100)))+(p%100?"."+bn(String(p%100).padStart(2,"0")):""):"";
+const dts=n=>".".repeat(n+1);
+const xdl=(x,w)=>x?`<span class="dl" style="min-width:${w}px">${esc(x)}</span>`:`<span>${dts(Math.round(w/5))}</span>`;
+const xbx=oc=>Array.from({length:7},(_,i)=>`<span>${oc[i]?bn(oc[i]):""}</span>`).join("");
+const xocode=v=>en(v).replace(/\D/g,"").slice(0,7);
+const xfd=v=>v?bn(fd(v)):"";
+const nowD=new Date();
+const xset=(id,p)=>{const n=$(id);if(n){if("value" in n&&n.tagName==="INPUT")n.value=fmt(p/100);else n.textContent=fmt(p/100)}};
+const xfld=(pre,S,k,l,ex="")=>`<label>${l}<input value="${esc(S[k])}" ${ex} oninput="${pre}F('${k}',this.value)"></label>`;
+const xdt=(pre,S,k,l)=>`<label>${l}<input type="date" value="${esc(S[k])}" oninput="${pre}F('${k}',this.value)"></label>`;
+const xhead=(pre,S)=>`${xfld(pre,S,"off","দপ্তর")}${xfld(pre,S,"oc","অপারেশন কোড",'inputmode="numeric" maxlength="7"')}
+<label>মাস<select onchange="${pre}F('mon',+this.value)">${bmOpt(S.mon)}</select></label>${xfld(pre,S,"yr","বছর",'inputmode="numeric" maxlength="4"')}`;
+const xtok=(pre,S)=>`${xfld(pre,S,"tk","টোকেন নং")}${xdt(pre,S,"tkd","টোকেন তারিখ")}${xfld(pre,S,"vn","ভাউচার নং")}${xdt(pre,S,"vd","ভাউচার তারিখ")}`;
+const xAcc=()=>`<div class="ac" style="margin-top:6px">হিসাবরক্ষণ অফিসে ব্যবহারের জন্য</div>
+<p>প্রদানের জন্য পাস করা হল, টাকা ${dts(40)} কথায় ${dts(60)}</p>
+<div class="sg3"><div><div class="gp">অডিটর (স্বাক্ষর)</div><div>নাম ${dts(22)}</div><div>তাং${dts(22)}</div><div>সিল</div></div>
+<div><div class="gp">সুপার (স্বাক্ষর)</div><div>নাম ${dts(22)}</div><div>তাং${dts(22)}</div><div>সিল</div><div class="gp">চেক নং ${dts(30)}</div></div>
+<div><div class="gp">নিরীক্ষা ও হিসাবরক্ষণ অফিসার (স্বাক্ষর)</div><div>নাম ${dts(22)}</div><div>তাং ${dts(22)}</div><div>সিল ${dts(22)}</div><div class="gp">তারিখ${dts(20)}</div><div class="gp">চেক প্রদানকারীর স্বাক্ষর</div><div>নাম ${dts(30)}</div><div>তাং ${dts(24)}</div><div>সিল</div></div></div>`;
+const xfn="* প্রতিষ্ঠানের ক্ষেত্রে ০৬ ডিজিট এবং বিশেষ কার্যক্রম/ প্রজেক্ট/ স্কিম -এর ক্ষেত্রে সাত (০৭) ডিজিটের কোড ব্যবহার করতে হবে।";
+
+/* ===== Officer bill (T.R. Form 13) ===== */
+const OK_="bill_officer_v1";
+const OA=[["3111101","মূল বেতন (অফিসার)"],["3111306","শিক্ষা ভাতা"],["3111310","বাড়িভাড়া ভাতা"],["3111311","চিকিৎসা ভাতা"],["3111312","মোবাইল/সেলফোন ভাতা"],["3258140","মোটরযান রক্ষণাবেক্ষণ ব্যয়"]];
+const OD=[["1162101","স্ট্যাম্প ডিউটি"],["1411202","সরকারি কর্মচারীকে প্রদত্ত ঋণের সুদ"],["1422404","পানি ও পয়ঃনিষ্কাশন ব্যবস্থা চার্জ"],["1441204","পৌরকর"],["7215101","গৃহনির্মাণ ঋণ"],["7215104","মোটরগাড়ি ঋণ"],["7215103","সুদমুক্ত ঋণ"],["7215105","মোটর সাইকেল ঋণ"],["7215102","কম্পিউটার ঋণ"],["8112201","সাধারণ ভবিষ্য তহবিল (সিভিল)"],["8172401","তিতাস গ্যাস বিল"],["8172402","বাখরাবাদ গ্যাস বিল"],["8172403","জালালাবাদ গ্যাস বিল"],["8172404","কর্ণফুলী গ্যাস বিল"],["8172503","কর্মচারী কল্যাণ তহবিল"],["8172504","কর্মচারী যৌথবিমা তহবিল"]];
+const eRow0=()=>({c:"",n:"",r:"",a:""});
+const mkO=()=>({mon:nowD.getMonth(),yr:String(nowD.getFullYear()),off:BILL.off||"",oc:BILL.oc||DEF_OC,nm:"",ds:"",nid:"",gpf:"",ins:"",tin:"",tk:"",tkd:"",vn:"",vd:"",v:{},ex:[eRow0(),eRow0()],dx:[eRow0(),eRow0(),eRow0()]});
+let OB=xld(OK_,mkO());
+function oF(k,v){OB[k]=v;xsv(OK_,OB)}
+function oSet(g,c,f,v){(OB.v[g+c]=OB.v[g+c]||{})[f]=v;oTot()}
+function oEx(g,i,f,v){OB[g][i][f]=v;oTot()}
+function oSum(){let A=0,D=0;OA.forEach(([c])=>A+=bP((OB.v["a"+c]||{}).a));OB.ex.forEach(x=>A+=bP(x.a));OD.forEach(([c])=>D+=bP((OB.v["d"+c]||{}).a));OB.dx.forEach(x=>D+=bP(x.a));return {A,D,N:A-D}}
+function oTot(){xsv(OK_,OB);const s=oSum();xset("o_a",s.A);xset("o_d",s.D);xset("o_n",s.N)}
+function billO(){
+ const inp=(h,v)=>`<input type="number" min="0" step="any" value="${esc(v||"")}" oninput="${h}">`;
+ const row=(g,c,n)=>{const d=OB.v[g+c]||{};return `<tr><td>${c}</td><td>${esc(n)}</td><td>${inp(`oSet('${g}','${c}','r',this.value)`,d.r)}</td><td>${inp(`oSet('${g}','${c}','a',this.value)`,d.a)}</td></tr>`};
+ const xr=(g,arr)=>arr.map((x,i)=>`<tr><td><input value="${esc(x.c)}" oninput="oEx('${g}',${i},'c',this.value)"></td><td><input value="${esc(x.n)}" oninput="oEx('${g}',${i},'n',this.value)"></td><td>${inp(`oEx('${g}',${i},'r',this.value)`,x.r)}</td><td>${inp(`oEx('${g}',${i},'a',this.value)`,x.a)}</td></tr>`).join("");
+ const s=oSum();
+ return `<div class="card"><h2>অফিসার বিল (টি. আর. ফরম নং ১৩)</h2><div class="bg">${xhead("o",OB)}
+${xfld("o",OB,"nm","নাম")}${xfld("o",OB,"ds","পদবি")}${xfld("o",OB,"nid","এনআইডি নং")}
+${xfld("o",OB,"gpf","ভবিষ্য তহবিল হিসাব নং")}${xfld("o",OB,"ins","ডাক জীবনবিমা নং")}${xfld("o",OB,"tin","টি আই এন/ই টি আই এন")}
+${xtok("o",OB)}</div>
+<div class="w sc" style="margin-top:16px"><table class="ns"><thead><tr><th>অর্থনৈতিক কোড</th><th>বিবরণ</th><th class="n">হার (টাকা)</th><th class="n">টাকার অঙ্ক</th></tr></thead><tbody>
+<tr><td colspan="4"><b>বেতন ও ভাতা</b></td></tr>${OA.map(([c,n])=>row("a",c,n)).join("")}${xr("ex",OB.ex)}
+<tr><td colspan="3"><b>সর্বমোট বেতন ও ভাতা (ক)</b></td><td><input id="o_a" readonly value="${fmt(s.A/100)}"></td></tr>
+<tr><td colspan="4"><b>কর্তন ও পরিশোধ</b></td></tr>${OD.map(([c,n])=>row("d",c,n)).join("")}${xr("dx",OB.dx)}
+<tr><td colspan="3"><b>কর্তন ও পরিশোধ বাবদ মোট আদায় (খ)</b></td><td><input id="o_d" readonly value="${fmt(s.D/100)}"></td></tr>
+<tr><td colspan="3"><b>প্রদেয় বিল (ক-খ) — ৮১৭২১০৮</b></td><td><input id="o_n" readonly value="${fmt(s.N/100)}"></td></tr></tbody></table></div>
+<div class="bar" style="margin:18px 0 0"><button class="btn" onclick="printO()">প্রিন্ট বিল</button><button class="btn" style="background:#64748b" onclick="oClear()">মুছুন</button></div>
+<p class="note">হার ঘরটি ঐচ্ছিক। ফাঁকা ঘরে অন্য কোড/বিবরণ যোগ করা যাবে।</p></div>`}
+async function oClear(){if(!await ask("সব তথ্য মুছে নতুন বিল শুরু করবেন?"))return;const k={off:OB.off,oc:OB.oc,mon:OB.mon,yr:OB.yr};OB={...mkO(),...k};xsv(OK_,OB);render()}
+function printO(){const s=oSum();
+ if(!s.A)return alert("কমপক্ষে একটি বেতন/ভাতার পরিমাণ লিখুন");
+ if(s.D>s.A)return alert("মোট কর্তন মোট বেতন ও ভাতার চেয়ে বেশি হতে পারে না");
+ xdef(OB.off,OB.oc);xsv(OK_,OB);
+ const oc=xocode(OB.oc);
+ const pr=(c,n,r,a)=>{const R=bP(r),A=bP(a);return `<tr><td><i class="cb${A?" on":""}"></i><b>${c?bn(esc(c)):""}</b></td><td>${esc(n)}</td>${xz2(R)}${xz2(A)}</tr>`};
+ const AR=OA.map(([c,n])=>{const d=OB.v["a"+c]||{};return pr(c,n,d.r,d.a)}).join("")+OB.ex.map(x=>pr(x.c,x.n,x.r,x.a)).join("");
+ const DR=OD.map(([c,n])=>{const d=OB.v["d"+c]||{};return pr(c,n,d.r,d.a)}).join("")+OB.dx.map(x=>pr(x.c,x.n,x.r,x.a)).join("");
+ const A=xmm(s.A),D=xmm(s.D),N=xmm(s.N);
+ const p1=`<div class="pg">
+<div class="hd"><div class="fl">টি. আর. ফরম নং ১৩<br>[এস, আর, ১৩৯ (১) দ্রষ্টব্য]</div><div class="tt">গেজেটেড সরকারি কর্মকর্তার বেতন বিল<div class="of">${xdl(BMON[OB.mon],80)} মাস ${xdl(bn(OB.yr),50)} বৎসর<br>দপ্তর ${xdl(OB.off,260)}</div></div><div class="fl"></div></div>
+<div class="row"><span>প্রাতিষ্ঠানিক/ অপারেশন কোড *</span><span class="bx">${xbx(oc)}</span></div>
+<div class="row"><span>নাম: ${xdl(OB.nm,190)}</span><span>পদবি: ${xdl(OB.ds,140)}</span><span>এনআইডি নং: ${xdl(bn(OB.nid),130)}</span></div>
+<div class="row"><span>ভবিষ্য তহবিল হিসাব নং: ${xdl(bn(OB.gpf),80)}</span><span>ডাক জীবনবিমা নং: ${xdl(bn(OB.ins),80)}</span><span>টি আই এন/ই টি আই এন: ${xdl(bn(OB.tin),100)}</span></div>
+<div class="row"><span>টোকেন নং: ${xdl(bn(OB.tk),70)} তারিখ: ${xdl(xfd(OB.tkd),70)}</span><span>ভাউচার নং: ${xdl(bn(OB.vn),70)} তারিখ: ${xdl(xfd(OB.vd),70)}</span></div>
+<table class="bt"><thead><tr><th rowspan="2" style="width:15%">অর্থনৈতিক কোড</th><th rowspan="2">বিবরণ</th><th colspan="2" style="width:18%">হার</th><th colspan="2" style="width:20%">টাকার অঙ্ক</th></tr><tr><th>টাকা</th><th>পয়সা</th><th>টাকা</th><th>পয়সা</th></tr></thead><tbody>
+<tr><td colspan="6"><b>বেতন ও ভাতা</b></td></tr>${AR}
+<tr><td colspan="4" class="r"><b>সর্বমোট বেতন ও ভাতা (ক)</b></td><td class="n">${A.t}</td><td class="n">${A.p}</td></tr>
+<tr><td colspan="6"><b>কর্তন ও পরিশোধ</b></td></tr>${DR}
+<tr><td colspan="4" class="r"><b>কর্তন ও পরিশোধ বাবদ মোট আদায় (খ)</b></td>${s.D?`<td class="n">${D.t}</td><td class="n">${D.p}</td>`:"<td></td><td></td>"}</tr>
+<tr><td><i class="cb"></i><b>৮১৭২১০৮</b></td><td>প্রদেয় বিল (ক-খ)</td><td></td><td></td><td class="n">${N.t}</td><td class="n">${N.p}</td></tr>
+<tr><td colspan="6">টাকা (কথায়): <b>${bwMoney(s.N)}</b></td></tr></tbody></table>
+<div class="row" style="margin-top:8px"><span>বাহক/ ব্যাংক/ এজেন্টের নাম: ${dts(70)}</span></div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:4px"><div>তারিখ:${dts(26)}</div><div style="text-align:center"><div style="border-top:1px solid #000;padding:2px 10px 0;margin-top:22px">কর্মকর্তার স্বাক্ষর</div><div style="text-align:left">সিল</div></div><div style="border:1px solid #000;width:34mm;height:20mm;text-align:center;padding-top:4mm">রাজস্ব<br>স্ট্যাম্প</div></div>
+<div class="rt2">[অপর পৃষ্ঠা দ্রষ্টব্য]</div><div class="fn">${xfn}</div></div>`;
+ const p2=`<div class="pg2"><div class="pn">২</div>${xAcc()}
+<div class="ac" style="margin-top:22px;font-size:15px">নির্দেশাবলী</div>
+<p>১।&nbsp; যে মাসের কাজের বিনিময়ে বেতন অর্জন করা হয়েছে মাসের শেষ কার্যদিবসের ৫ (পাঁচ) দিন পূর্বে হিসাবরক্ষণ অফিসে বিল পেশ করতে হবে।</p>
+<p>২।&nbsp; পেশকৃত প্রতিটি বিলের জন্য একটি করে টোকেন নাম্বার দেওয়া হবে। আপত্তিসহ ফেরত বিল গ্রহণের প্রাক্কালে উক্ত টোকেন নাম্বার বাতিল করতে হবে। এতদ্ব্যতীত চেক গ্রহণকালে স্ট্যাম্পসহ একটি লিখিত রসিদ (প্রযোজ্য ক্ষেত্রে) প্রদান করতে হবে।</p>
+<p>৩।&nbsp; ব্যাংক অ্যাকাউন্টে টাকা প্রদানের জন্য ইচ্ছানুসারে বেতন বিলে নির্দেশ করা যাবে। এরূপ ক্ষেত্রে নিজ ব্যাংক অ্যাকাউন্টে ইএফটি-এর মাধ্যমে টাকা সংগ্রহের জন্য বেতন বিল পেশ করা যাবে। ইএফটি-এর মাধ্যমে বিল গ্রহণের জন্য ইএফটি ফরম পূরণ করে সংশ্লিষ্ট হিসাবরক্ষণ অফিসে প্রেরণ করতে হবে। ইএফটি-এর মাধ্যমে ব্যাংক অ্যাকাউন্টে সরাসরি টাকা প্রদান করা হবে।</p>
+<p>নোট-১ : বাহকের নিকট প্রদত্ত টাকা, চেক অথবা বিলের জালিয়াতি বা আত্মসাৎ সংক্রান্ত কোনরূপ দায়-দায়িত্ব সরকার গ্রাহ্য করবে না।</p></div>`;
+ rpGo(`<div class="bf sm">${p1}${p2}</div>`)}
+
+/* ===== Employee bill (T.R. Form 15) ===== */
+const EK_="bill_emp_v1";
+/* [key, code, full name, short name, on page-1 list, on schedule] */
+const EA=[["3111201","3111201","মূল বেতন (কর্মচারী)","মূল বেতন",1],["3111202","3111202","ব্যক্তিগত বেতন","ব্যক্তিগত বেতন",0],["3111306","3111306","শিক্ষা ভাতা","শিক্ষা ভাতা",1],["3111307","3111307","পাহাড়ি ভাতা","পাহাড়ি ভাতা",0],["3111310","3111310","বাড়িভাড়া ভাতা","বাড়িভাড়া ভাতা",1],["3111311","3111311","চিকিৎসা ভাতা","চিকিৎসা ভাতা",1],["3111302","3111302","যাতায়াত ভাতা","যাতায়াত ভাতা",1],["3111314","3111314","টিফিন ভাতা","টিফিন ভাতা",1],["3111308","3111308","ঝুঁকি ভাতা","ঝুঁকি ভাতা",1],["3111315","3111315","পোশাক ভাতা","পোশাক ভাতা",1],["3111316","3111316","ধোলাই ভাতা","ধোলাই ভাতা",1],["3111327","3111327","শ্রান্তি ও বিনোদন ভাতা","শ্রান্তি ও বিনোদন ভাতা",1]];
+const ED=[["1162101","1162101","স্ট্যাম্প ডিউটি","স্ট্যাম্প ডিউটি",1],["1411202","1411202","সরকারি কর্মচারীকে প্রদত্ত ঋণের সুদ","সরকারি কর্মচারীকে প্রদত্ত ঋণের সুদ",1],["1422404","1422404","পানি ও পয়ঃনিষ্কাশন ব্যবস্থা চার্জ","পানি ও পয়ঃনিষ্কাশন ব্যবস্থা চার্জ",1],["1441204","1441204","পৌরকর","পৌরকর",1],["7215101","7215101","গৃহনির্মাণ ঋণ","গৃহনির্মাণ ঋণ",1],["7215105","7215105","মোটর সাইকেল ঋণ","মোটর সাইকেল ঋণ",1],["7215102","7215102","কম্পিউটার ঋণ","কম্পিউটার ঋণ",1],["8112201","8112201","সাধারণ ভবিষ্য তহবিল (সিভিল)","সাধারণ ভবিষ্য তহবিল (সিভিল)",1],["8112201b","8112201","ভবিষ্য তহবিলের অগ্রিম ও সুদ আদায়","ভবিষ্য তহবিলের অগ্রিম ও সুদ আদায়",1],["8172401","8172401","তিতাস গ্যাস","তিতাস গ্যাস",1],["8172402","8172402","বাখরাবাদ গ্যাস বিল","বাখরাবাদ গ্যাস বিল",1],["8172403","8172403","জালালাবাদ গ্যাস বিল","জালালাবাদ গ্যাস বিল",1],["8172404","8172404","কর্ণফুলী গ্যাস বিল","কর্ণফুলী গ্যাস বিল",1],["8172503","8172503","কর্মচারী কল্যাণ তহবিল","কর্মচারী কল্যাণ তহবিল",1],["8172504","8172504","কর্মচারী যৌথবিমা তহবিল","কর্মচারী যৌথবিমা তহবিল",1],["8113110","8113110","স্থানীয় তহবিল জমা","স্থানীয় তহবিল জমা",1],["1421302","1421302","ভাড়া - আবাসিক","ভাড়া - আবাসিক",0]];
+const ESCH_A=EA.map(x=>x[0]);
+const ESCH_D=["8112201","8112201b","8172503","1421302","8172401","1422404","7215101","7215105","7215102","1411202","8113110"];
+const EALL=[...EA,...ED];
+const mkE=()=>({mon:nowD.getMonth(),yr:String(nowD.getFullYear()),off:BILL.off||"",oc:BILL.oc||DEF_OC,tk:"",tkd:"",vn:"",vd:"",emps:[{nm:"",v:{}}]});
+let EB=xld(EK_,mkE());
+if(!Array.isArray(EB.emps)||!EB.emps.length)EB.emps=[{nm:"",v:{}}];
+function eF(k,v){EB[k]=v;xsv(EK_,EB)}
+function eN(i,v){EB.emps[i].nm=v;xsv(EK_,EB)}
+function eV(i,k,v){EB.emps[i].v[k]=v;eTot()}
+function eAdd(){EB.emps.push({nm:"",v:{}});xsv(EK_,EB);render();const t=document.querySelectorAll(".ns.wide tbody tr:last-child input");t[0]&&t[0].focus()}
+async function eDel(i){if(!await ask("এই কর্মচারীকে তালিকা থেকে বাদ দেবেন?"))return;EB.emps.splice(i,1);if(!EB.emps.length)EB.emps.push({nm:"",v:{}});xsv(EK_,EB);render()}
+function eRowSum(e){let A=0,D=0;EA.forEach(x=>A+=bP(e.v[x[0]]));ED.forEach(x=>D+=bP(e.v[x[0]]));return {A,D,N:A-D}}
+function eCols(){const ct={};EALL.forEach(x=>ct[x[0]]=EB.emps.reduce((t,e)=>t+bP(e.v[x[0]]),0));let A=0,D=0;EA.forEach(x=>A+=ct[x[0]]);ED.forEach(x=>D+=ct[x[0]]);return {ct,A,D,N:A-D}}
+function eTot(){xsv(EK_,EB);EB.emps.forEach((e,i)=>{const r=eRowSum(e);xset("e_a"+i,r.A);xset("e_d"+i,r.D);xset("e_n"+i,r.N)});const c=eCols();EALL.forEach(x=>xset("e_c_"+x[0],c.ct[x[0]]));xset("e_ta",c.A);xset("e_td",c.D);xset("e_tn",c.N)}
+function billE(){
+ const c=eCols();
+ const head=`<tr><th class="sk">নাম ও পদবি</th>${EA.map(x=>`<th class="n">${x[3]}<br><small>${x[1]}</small></th>`).join("")}<th class="n">মোট (ক)</th>${ED.map(x=>`<th class="n">${x[3]}<br><small>${x[1]}</small></th>`).join("")}<th class="n">মোট কর্তন (খ)</th><th class="n">প্রদেয় (ক-খ)</th><th></th></tr>`;
+ const body=EB.emps.map((e,i)=>{const r=eRowSum(e);const cell=x=>`<td><input type="number" min="0" step="any" value="${esc(e.v[x[0]]||"")}" oninput="eV(${i},'${x[0]}',this.value)"></td>`;
+  return `<tr><td class="sk"><input value="${esc(e.nm)}" placeholder="নাম, পদবি" oninput="eN(${i},this.value)"></td>${EA.map(cell).join("")}<td class="n" id="e_a${i}">${fmt(r.A/100)}</td>${ED.map(cell).join("")}<td class="n" id="e_d${i}">${fmt(r.D/100)}</td><td class="n" id="e_n${i}">${fmt(r.N/100)}</td><td><button class="btn s d" onclick="eDel(${i})">মুছুন</button></td></tr>`}).join("");
+ const foot=`<tr><td class="sk">সর্বমোট</td>${EA.map(x=>`<td class="n" id="e_c_${x[0]}">${fmt(c.ct[x[0]]/100)}</td>`).join("")}<td class="n" id="e_ta">${fmt(c.A/100)}</td>${ED.map(x=>`<td class="n" id="e_c_${x[0]}">${fmt(c.ct[x[0]]/100)}</td>`).join("")}<td class="n" id="e_td">${fmt(c.D/100)}</td><td class="n" id="e_tn">${fmt(c.N/100)}</td><td></td></tr>`;
+ return `<div class="card"><h2>কর্মচারী বিল (টি. আর. ফরম নং ১৫)</h2><div class="bg">${xhead("e",EB)}${xtok("e",EB)}</div>
+<div class="w sc" style="margin-top:16px"><table class="ns wide"><thead>${head}</thead><tbody>${body}</tbody><tfoot>${foot}</tfoot></table></div>
+<div class="bar" style="margin:18px 0 0"><button class="btn" style="background:#475569" onclick="eAdd()">+ কর্মচারী যোগ করুন</button><button class="btn" onclick="printE()">প্রিন্ট বিল</button><button class="btn" style="background:#64748b" onclick="eClear()">মুছুন</button></div>
+<p class="note">প্রতিটি কর্মচারীর বেতন ও ভাতা এবং কর্তনের পরিমাণ লিখুন। প্রথম পৃষ্ঠায় (মোট বিল) কোডভিত্তিক যোগফল, দ্বিতীয় পৃষ্ঠায় প্রত্যয়ন এবং তৃতীয় পৃষ্ঠায় (আড়াআড়ি) কর্মচারীদের তালিকা প্রিন্ট হবে।</p></div>`}
+async function eClear(){if(!await ask("সব কর্মচারীর তথ্য মুছে নতুন বিল শুরু করবেন?"))return;const k={off:EB.off,oc:EB.oc,mon:EB.mon,yr:EB.yr};EB={...mkE(),...k};xsv(EK_,EB);render()}
+function printE(){const c=eCols();
+ if(!c.A)return alert("কমপক্ষে একটি বেতন/ভাতার পরিমাণ লিখুন");
+ if(c.D>c.A)return alert("মোট কর্তন মোট বেতন ও ভাতার চেয়ে বেশি হতে পারে না");
+ xdef(EB.off,EB.oc);xsv(EK_,EB);
+ const oc=xocode(EB.oc),ct=c.ct;
+ const dr=(code,name,p)=>`<tr><td><i class="cb${p?" on":""}"></i><b>${code?bn(code):""}</b></td><td>${esc(name)}</td>${xz2(p)}</tr>`;
+ const rowsOf=(arr,blank)=>{const std=arr.filter(x=>x[4]).map(x=>dr(x[1],x[2],ct[x[0]])),ext=arr.filter(x=>!x[4]&&ct[x[0]]).map(x=>dr(x[1],x[2],ct[x[0]]));const nb_=Math.max(0,blank-ext.length);return std.concat(ext,Array.from({length:nb_},()=>dr("","",0)))};
+ const AR=rowsOf(EA,2),DR=rowsOf(ED,4);
+  const A=xmm(c.A),D=xmm(c.D),Nn=xmm(c.N);
+ const ins=["অবিলিকৃত/স্থগিত টাকা যথাযথ কলামে লাল কালিতে লিখতে হবে এবং যোগ করার সময় তা বাদ রাখতে হবে।","অনুপস্থিত কর্মচারীগণের তালিকায় স্থান পায়নি এমন ঘটনাসমূহ যথা-মৃত্যু, অবসরগ্রহণ, স্থায়ী বদলি ও প্রথম নিয়োগ 'মন্তব্য' কলামে লিখতে হবে।","অধস্তন সরকারি কর্মচারী এবং এস. আর. ১৫২ তে উল্লেখিত সরকারি কর্মচারীদের নাম বেতনের বিলে বাদ দেওয়া যেতে পারে।","সেরেস্তার প্রত্যেক শাখার পর পাতায় আড়াআড়ি লাল রেখা টানতে হবে এবং তার নিচে বেতন ও ভাতার সমষ্টি বেতন ও ভাতার কলামে লাল কালিতে প্রদর্শন করতে হবে।","স্থায়ী পদে নিযুক্ত ব্যক্তিদের নাম স্থায়ী পদের বেতন গ্রহণের মাপকাঠিতে জ্যেষ্ঠত্বের ক্রমঅনুসারে লিখতে হবে এবং খালি পদসমূহ স্থানাপন্ন লোকদেরকে দেখাতে হবে।","বেতন বিলে কর্তন ও আদায়ের পৃথক পৃথক শিডিউল বেতনের বিলে সংযুক্ত করতে হবে।"].map((t,i)=>`<p>${bn(String(i+1))}।&nbsp; ${t}</p>`).join("");
+ const p1=`<div class="pg">
+<div class="hd"><div class="fl">টি, আর, ফরম নং ১৫<br>[এস. আর. ১৫০ (১) দ্রষ্টব্য]</div><div class="tt">সংস্থাপন কর্মচারীগণের বেতনের বিল<div class="of">${xdl(BMON[EB.mon],80)} মাসের ${xdl(bn(EB.yr),50)}<br>দপ্তরের নাম : ${xdl(EB.off,260)}</div></div><div class="fl"></div></div>
+<div class="row"><span>প্রাতিষ্ঠানিক/ অপারেশন কোড *</span><span class="bx">${xbx(oc)}</span></div>
+<div class="row"><span>টোকেন নং ${xdl(bn(EB.tk),70)} তারিখ ${xdl(xfd(EB.tkd),70)}</span><span>ভাউচার নং ${xdl(bn(EB.vn),70)} তারিখ ${xdl(xfd(EB.vd),70)}</span></div>
+<table class="bt"><thead><tr><th style="width:30%">নির্দেশাবলী</th><th style="width:15%">অর্থনৈতিক কোড</th><th>বিবরণ</th><th style="width:11%">টাকা</th><th style="width:7%">পয়সা</th></tr></thead><tbody>
+<tr><td rowspan="${AR.length+DR.length+6}" class="ins">${ins}</td><td colspan="4"><b>বেতন ও ভাতা</b></td></tr>${AR.join("")}
+<tr><td colspan="2" class="r"><b>মোট বেতন ও ভাতা (ক)</b></td><td class="n">${A.t}</td><td class="n">${A.p}</td></tr>
+<tr><td colspan="4"><b>কর্তন ও পরিশোধ</b></td></tr>${DR.join("")}
+<tr><td colspan="2" class="r"><b>কর্তন ও পরিশোধ বাবদ মোট আদায় (খ)</b></td>${c.D?`<td class="n">${D.t}</td><td class="n">${D.p}</td>`:"<td></td><td></td>"}</tr>
+<tr><td><i class="cb"></i><b>৮১৭২১০৮</b></td><td>প্রদেয় বিল (ক-খ)</td><td class="n">${Nn.t}</td><td class="n">${Nn.p}</td></tr>
+<tr><td colspan="5">টাকা (কথায়) : <b>${bwMoney(c.N)}</b></td></tr></tbody></table>
+<div class="rt2">[অপর পৃষ্ঠা দ্রষ্টব্য]</div><div class="fn">${xfn}</div></div>`;
+ const certs=[["১।&nbsp; (ক) বিলের টাকা বুঝে পেলাম।",0],["(খ)&nbsp; প্রত্যয়ন করছি যে, নিম্নে বিশদভাবে বর্ণিত টাকা (যা এই বিল হতে কর্তন করে ফেরত দেওয়া হয়েছে) ব্যতীত এই তারিখের ১মাস/২মাস/৩মাস পূর্বে উত্তোলিত বিলের অন্তর্ভুক্ত টাকা যথার্থ ব্যক্তিদের প্রদান করা হয়েছে। (প্রযোজ্য ক্ষেত্রে টিক চিহ্ন (✓) দিন)।",1],["(গ)&nbsp; প্রত্যয়ন করছি যে, কর্মচারীদের নিকট হতে স্ট্যাম্প ডিউটি বেতন বিল হতে কর্তন/ অর্থ প্রাপ্তির স্ট্যাম্পসহ রশিদ গ্রহণ করে বেতন বইতে সংরক্ষণ করা হয়েছে।",1],
+ ["২।&nbsp; বিলের সাথে একটি অনুপস্থিতির তালিকা প্রদান করা হলো।",0],["৩।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, এই কার্যালয়ের সকল নিয়োগ, স্থায়ী ও অস্থায়ী পদোন্নতি সংক্রান্ত তথ্যাদি সংশ্লিষ্ট কর্মচারীগণের নিজ নিজ চাকুরি বইতে আমার সত্যায়নে লিপিবদ্ধ হয়েছে।",0],["৪।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, চাকুরি বইতে রক্ষিত ছুটির হিসাব এবং প্রযোজ্য ছুটির বিধি অনুযায়ী প্রাপ্য ছুটি ছাড়া কাউকেও কোন ছুটি মঞ্জুর করা হয়নি। আমি নিশ্চিত যে, তাদের ছুটি পাওনা ছিল এবং সকল ছুটির মঞ্জুরি ও ছুটিতে বা ছুটি থেকে ফিরে আসা, সাময়িক কর্মচ্যুতি ও অন্য কাজে যাওয়া ও অন্যান্য ঘটনা নিয়ম মোতাবেক চাকুরি বইতে এবং ছুটির হিসাবে আমার সত্যায়নে লিপিবদ্ধ করা হয়েছে।",0],["৫।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, যে সকল সরকারি কর্মচারীর নাম উল্লেখ করে এই বিলে বেতন দাবি করা হয়েছে, চলতি মাসে তারা যথার্থই সরকারি চাকুরিতে নিয়োজিত ছিলেন।",0],["৬।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, যে সকল সরকারি কর্মচারীর বাড়িভাড়া ভাতা এই বিলে দাবি করা হয়েছে, তারা সরকারি কোন বাসস্থানে বসবাস করেন নি।",0],["৭।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, যে ক্ষেত্রে ছুটির/অস্থায়ী বদলিকালীন ক্ষতিপূরণ ভাতা দাবি করা হয়েছে, সেক্ষেত্রে কর্মচারীর একই বা স্বপদে ফিরে আসার সম্ভাব্যতা ছুটি/ অস্থায়ী বদলির মূল আদেশে লিপিবদ্ধ করা হয়েছে।",0],["৮।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, কর্মচারীদের ছুটিকালীন বেতন, ছুটিতে যাওয়ার সময় যে হারে বেতন গ্রহণ করেছেন, সেই হারে দাবি করা হয়েছে।",0],["৯।&nbsp; প্রত্যয়ন করা যাচ্ছে যে, অবসর গ্রহণ করেছেন এমন কোন কর্মচারীর নাম এই বিলে অন্তর্ভুক্ত করা হয়নি।",0]].map(([t,i])=>`<p${i?' class="in"':""}>${t}</p>`).join("");
+ const blankRows=Array.from({length:7},()=>"<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>").join("");
+ const p2=`<div class="pg2"><div class="pn">২</div>${certs}
+<div class="ac" style="margin-top:8px">অনুপস্থিত ব্যক্তিদের ফেরত দেওয়া বেতনের বিবরণ</div>
+<table class="bt"><thead><tr><th rowspan="2" style="width:14%">সেকসন</th><th rowspan="2">নাম</th><th rowspan="2" style="width:14%">সময়</th><th colspan="2" style="width:26%">টাকার অঙ্ক</th></tr><tr><th>টাকা</th><th>পয়সা</th></tr></thead><tbody>${blankRows}</tbody></table>
+<div class="sg2" style="margin-top:10px"><div class="sgc"><div>স্থান ${dts(32)}</div><div>তারিখ ${dts(32)}</div></div><div class="sgc"><div>আয়ন কর্মকর্তার স্বাক্ষর${dts(28)}</div><div>নাম ${dts(34)}</div><div>পদবি ${dts(34)}</div><div>সিল ${dts(24)}</div></div></div>
+<hr class="ln">${xAcc()}</div>`;
+ const fa=xfa,sch=(keys,arr)=>keys.map(k=>arr.find(x=>x[0]===k));
+ const SA=sch(ESCH_A,EA),SD=sch(ESCH_D,ED);
+ const hc=x=>`<th>${x[3]}<br>${bn(x[1])}</th>`;
+ const sRows=EB.emps.map((e,i)=>{const r=eRowSum(e);return `<tr><td class="c">${bn(String(i+1))}</td><td class="nmc">${esc(e.nm)}</td>${SA.map(x=>`<td class="n">${fa(bP(e.v[x[0]]))}</td>`).join("")}<td class="n">${fa(r.A)}</td>${SD.map(x=>`<td class="n">${fa(bP(e.v[x[0]]))}</td>`).join("")}<td class="n">${fa(r.D)}</td><td class="n">${fa(r.N)}</td><td></td><td></td></tr>`}).join("");
+ const rh=EB.emps.length>14?5.5:7.5,pad=Array.from({length:Math.max(0,10-EB.emps.length)},()=>`<tr>${"<td></td>".repeat(30)}</tr>`).join("");
+ const sTot=`<tr class="g"><td></td><td class="nmc">সর্বমোট</td>${SA.map(x=>`<td class="n">${fa(ct[x[0]])}</td>`).join("")}<td class="n">${fa(c.A)}</td>${SD.map(x=>`<td class="n">${fa(ct[x[0]])}</td>`).join("")}<td class="n">${fa(c.D)}</td><td class="n">${fa(c.N)}</td><td></td><td></td></tr>`;
+ const nums=Array.from({length:30},(_,i)=>`<th>${bn(String(i+1))}</th>`).join("");
+ const p3=`<div class="lsr"><div class="lsi"><div class="ac" style="font-size:14px;margin:0 0 4px">সংস্থাপন কর্মচারীদের বেতন বিল</div>
+<div class="row" style="margin:4px 0 6px"><span>অফিসের নাম ${xdl(EB.off,300)} &nbsp; (${BMON[EB.mon]} ${bn(EB.yr)})</span><span>প্রাতিষ্ঠানিক/ অপারেশন কোড * <span class="bx">${xbx(oc)}</span></span></div>
+<table class="bt sc" style="--rh:${rh}mm"><thead><tr><th rowspan="2" style="width:3%">পদের ক্রমিক নং</th><th rowspan="2" style="width:11%">সেরেস্তার শাখা ও পদসহ কর্মচারীদের নাম<br>(এনআইডি নং, জি. পি. এফ নং ও ডাক জীবনবিমা নং)</th><th colspan="13">বেতন ও ভাতা</th><th colspan="12">কর্তন ও পরিশোধ</th><th rowspan="2">প্রদেয় বিল (ক-খ)<br>৮১৭২১০৮</th><th rowspan="2">মন্তব্য</th><th rowspan="2">প্রাপ্তি রশিদ</th></tr>
+<tr>${SA.map(hc).join("")}<th>বেতন ও ভাতার মোট দাবি (ক)</th>${SD.map(hc).join("")}<th>মোট কর্তন ও আদায় (খ)</th></tr><tr>${nums}</tr></thead><tbody>${sRows}${pad}${sTot}</tbody></table>
+<div class="fn" style="width:100%;border:0;margin-top:4px">${xfn}</div></div></div>`;
+ rpGo(`<div class="bf sm">${p1}${p2}${p3}</div>`)}
+
+
+
+/* ---- Start ---- */
+nav();render();
+
+</script>
+</body>
+</html>
