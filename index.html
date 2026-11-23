@@ -212,32 +212,49 @@ body.rp #rpt{display:block;color:#000;font-family:Calibri,Arial,sans-serif;font-
 }
 
 
-/* ---- Bill Maker: header + tabs ---- */
-body{font-family:"Segoe UI","Noto Sans Bengali","Nirmala UI",Roboto,Arial,sans-serif}
-header{padding:20px 16px 16px}
-header .hw{display:flex;align-items:center;justify-content:center;gap:14px}
-header .logo{flex:0 0 auto;width:54px;height:54px;border-radius:14px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
-header .ht{text-align:left}
-header h1{font-size:26px;line-height:1.25}
-header p{margin:2px 0 0;font-size:13px;opacity:.8}
-#st{margin-top:10px}
-nav{position:sticky;top:0;z-index:20}
+/* ---- Font: SolaimanLipi (put SolaimanLipi.ttf next to index.html) ---- */
+@font-face{font-family:"SolaimanLipi";src:local("SolaimanLipi"),local("Solaiman Lipi"),url("SolaimanLipi.ttf") format("truetype");font-weight:100 900;font-style:normal;font-display:swap}
+body,button,input,select,textarea{font-family:"SolaimanLipi","Noto Sans Bengali","Nirmala UI","Vrinda",Roboto,Arial,sans-serif}
+body{font-size:16px}
+/* ---- Header ---- */
+header{background:#0b2545;color:#fff;text-align:left;padding:0;border-bottom:1px solid #08203d}
+header .hi{max-width:1150px;margin:0 auto;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+header .brand{display:flex;align-items:center;gap:14px;min-width:0}
+header .logo{flex:0 0 auto;width:48px;height:48px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center}
+header h1{margin:0;font-size:24px;line-height:1.3;letter-spacing:0}
+header p{margin:1px 0 0;font-size:13px;line-height:1.4;color:#b9c7de;opacity:1}
+#st{margin:0;flex:0 0 auto;font-size:12.5px;padding:5px 12px;border-radius:4px;background:transparent;border:1px solid rgba(255,255,255,.28);color:#d5deee}
+#st::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#34d399;margin-right:8px;vertical-align:middle}
+/* ---- Tabs ---- */
+nav{position:sticky;top:0;z-index:20;display:flex;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding:0 max(12px,calc((100% - 1150px)/2 + 12px));background:#fff;border-bottom:1px solid #dbe3ee;box-shadow:none;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-start;gap:0;min-width:0;white-space:nowrap;padding:11px 20px 9px;border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;color:#475569;font-size:15px;font-weight:400;line-height:1.35;box-shadow:none;transform:none}
+nav button small{font-size:12px;color:#94a3b8}
+nav button:hover{background:#f4f7fb;color:var(--c);transform:none}
+nav button.on{background:transparent;color:var(--c);border-bottom-color:var(--c);box-shadow:none}
+nav button.on small{color:var(--c);opacity:.8}
 @media(max-width:640px){
-header{padding:14px 12px 12px}
-header .logo{width:42px;height:42px;border-radius:11px}
+header .hi{padding:12px}
+header .brand{gap:11px}
+header .logo{width:40px;height:40px;border-radius:9px}
 header .logo svg{width:24px;height:24px}
-header h1{font-size:20px}
+header h1{font-size:19px}
 header p{font-size:12px}
+#st{display:none}
+nav{padding:0 6px}
+nav button{padding:9px 14px 7px;font-size:14px}
 }
 </style>
 </head>
 <body>
 <header>
-<div class="hw">
-<div class="logo"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2.5h12a1 1 0 0 1 1 1V21l-2.5-1.6L14 21l-2-1.6L10 21l-2.5-1.6L5 21V3.5a1 1 0 0 1 1-1z"/><path d="M8.5 7.5h7M8.5 11h7M8.5 14.5h4"/></svg></div>
-<div class="ht"><h1>বিল প্রস্তুতকরণ</h1><p>ক্রয়, অফিসার ও কর্মচারী বিল তৈরি ও প্রিন্ট — টি. আর. ফরম ২১ · ১৩ · ১৫</p></div>
+<div class="hi">
+<div class="brand">
+<div class="logo"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0b2545" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2.5h12a1 1 0 0 1 1 1V21l-2.5-1.6L14 21l-2-1.6L10 21l-2.5-1.6L5 21V3.5a1 1 0 0 1 1-1z"/><path d="M8.5 7.5h7M8.5 11h7M8.5 14.5h4"/></svg></div>
+<div class="ht"><h1>বিল প্রস্তুতকরণ</h1><p>ক্রয়, অফিসার ও কর্মচারী বিল তৈরি ও প্রিন্ট</p></div>
 </div>
-<span id="st">তথ্য এই ডিভাইসেই সংরক্ষিত হয়</span>
+<span id="st">তথ্য এই ব্রাউজারে সংরক্ষিত</span>
+</div>
 </header>
 <nav id="nav"></nav>
 <main id="main"></main>
@@ -246,7 +263,7 @@ header p{font-size:12px}
 <script>
 
 const DEF_OC="";
-const TABS=[["purchase","ক্রয় ও সরবরাহ সেবা বিল (টি. আর. ২১)","#0891b2"],["officer","অফিসার বিল (টি. আর. ১৩)","#7c3aed"],["employee","কর্মচারী বিল (টি. আর. ১৫)","#ea580c"]];
+const TABS=[["purchase","ক্রয় ও সরবরাহ সেবা বিল","#0891b2","টি. আর. ফরম ২১"],["officer","অফিসার বিল","#7c3aed","টি. আর. ফরম ১৩"],["employee","কর্মচারী বিল","#ea580c","টি. আর. ফরম ১৫"]];
 let DB={bills:[]},tab="purchase";
 try{const t=localStorage.getItem("bill_tab");if(TABS.some(x=>x[0]===t))tab=t}catch(_){}
 const $=id=>document.getElementById(id);
@@ -266,7 +283,7 @@ function rpGo(html){$("rpt").innerHTML=html;document.body.classList.add("rp");do
 window.addEventListener("afterprint",()=>document.body.classList.remove("rp"));
 
 /* ---- Tabs ---- */
-function nav(){$("nav").innerHTML=TABS.map(([k,l,c])=>`<button style="--c:${c}" class="${k===tab?"on":""}" onclick="go('${k}')">${l}</button>`).join("")}
+function nav(){$("nav").innerHTML=TABS.map(([k,l,c,f])=>`<button style="--c:${c}" class="${k===tab?"on":""}" onclick="go('${k}')">${l}<small>${f}</small></button>`).join("")}
 function go(t){tab=t;try{localStorage.setItem("bill_tab",t)}catch(_){}nav();render();window.scrollTo(0,0)}
 function render(){const t=TABS.find(x=>x[0]===tab),m=$("main");m.style.setProperty("--ac",t[2]);
  m.innerHTML=({purchase:billP,officer:billO,employee:billE})[tab]();if(tab==="purchase")bc();mob()}
